@@ -1,13 +1,12 @@
 package com.example.controller;
 
+import com.example.dto.ActionSpecificationDto;
 import com.example.dto.EndDto;
-import com.example.dto.RootDto;
-import com.example.dto.SecondListDto;
+import com.example.entity.ActionSpecification;
 import com.example.entity.End;
-import com.example.entity.Root;
-import com.example.entity.SecondList;
+import com.example.entity.Company;
 import com.example.projection.RootProjection;
-import com.example.repository.RootRepository;
+import com.example.repository.ActionSpecificationRepository;
 import com.example.service.RootService;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
@@ -23,10 +22,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import static com.googlecode.jmapper.api.JMapperAPI.attribute;
 import static com.googlecode.jmapper.api.JMapperAPI.mappedClass;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
@@ -37,14 +39,14 @@ public class RootControllerTest {
     @Autowired
     private RootService service;
     @Autowired
-    private RootRepository repository;
+    private ActionSpecificationRepository repository;
 
-    private static Root root;
+    private static ActionSpecification root;
     private static boolean isSaved = false;
 
     @BeforeAll
     public static void init() {
-        SecondList secondList = new SecondList();
+        Company secondList = new Company();
         secondList.setId("ob");
 
 
@@ -79,10 +81,10 @@ public class RootControllerTest {
         }
         secondList.setMp(mp);
 
-        root = new Root();
+        root = new ActionSpecification();
         root.setId("1");
         root.setName("root");
-        root.setOb(Collections.singletonList(secondList));
+        root.setCompanies(Collections.singletonList(secondList));
     }
 
     public void saveRoot() {
@@ -92,7 +94,7 @@ public class RootControllerTest {
         }
     }
 
-    private void saveRoot(Root root) {
+    private void saveRoot(ActionSpecification root) {
         repository.saveAndFlush(root);
     }
 
@@ -110,7 +112,22 @@ public class RootControllerTest {
 
     @Test
     public void getAllMapstructParts() {
+        var companies = new ArrayList<Company>();
+        for (int i = 0; i < 2500; i++) {
+            var end = new Company();
+            end.setId("3" + i);
+            companies.add(end);
+        }
+        root = new ActionSpecification();
+        root.setId("1");
+        root.setName("root");
+        root.setCompanies(companies);
+        repository.saveAndFlush(root);
 
+
+        List<List<Object>> allCompanies = repository.getAllCompanies();
+        Map<String, List<Company>> allCompanies2 = repository.getAllCompanies2();
+        assertFalse(allCompanies2.isEmpty());
     }
 
     @Test
@@ -144,8 +161,8 @@ public class RootControllerTest {
         saveRoot();
         long startTime = System.currentTimeMillis();
         Mapper mapper = DozerBeanMapperBuilder.buildDefault();
-        Root entity = repository.getById("1");
-        RootDto rootDto = new RootDto();
+        ActionSpecification entity = repository.getById("1");
+        ActionSpecificationDto rootDto = new ActionSpecificationDto();
         mapper.map(entity, rootDto);
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
@@ -159,13 +176,13 @@ public class RootControllerTest {
     public void getJMapper() {
         saveRoot();
         JMapperAPI jmapperApi = new JMapperAPI()
-                .add(mappedClass(RootDto.class)
+                .add(mappedClass(ActionSpecificationDto.class)
                         .add(attribute("id").value("id"))
                         .add(attribute("name").value("name"))
                         .add(attribute("ob").value("ob"))
                 );
 
-        jmapperApi.add(mappedClass(SecondListDto.class)
+        jmapperApi.add(mappedClass(com.example.dto.Company.class)
                 .add(attribute("id").value("id"))
                 .add(attribute("mos").value("mos"))
                 .add(attribute("moa").value("moa"))
@@ -176,11 +193,11 @@ public class RootControllerTest {
                 .add(attribute("name").value("name"))
                 .add(attribute("text").value("text")));
 
-        JMapper<RootDto, Root> userMapper = new JMapper<>(RootDto.class, Root.class, jmapperApi);
+        JMapper<ActionSpecificationDto, ActionSpecification> userMapper = new JMapper<>(ActionSpecificationDto.class, ActionSpecification.class, jmapperApi);
 
         long startTime = System.currentTimeMillis();
-        Root entity = repository.getById("1");
-        RootDto result = userMapper.getDestination(entity);
+        ActionSpecification entity = repository.getById("1");
+        ActionSpecificationDto result = userMapper.getDestination(entity);
 
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;

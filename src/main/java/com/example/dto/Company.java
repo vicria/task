@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SecondListDto {
+public class Company {
     private String id;
     private List<EndDto> mos;
     private List<EndDto> moa;

@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.RootDto;
+import com.example.dto.ActionSpecificationDto;
 import com.example.service.RootService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class RootController {
      * @return All
      */
     @GetMapping("/all")
-    public RootDto getAll() {
+    public ActionSpecificationDto getAll() {
         return service.get();
     }
 

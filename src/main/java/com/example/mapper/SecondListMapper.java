@@ -1,14 +1,13 @@
 package com.example.mapper;
 
-import com.example.dto.SecondListDto;
-import com.example.entity.SecondList;
+import com.example.entity.Company;
 import org.mapstruct.Mapper;
 
 /**
- * Mapper between {@link SecondList} and {@link SecondListDto} classes.
+ * Mapper between {@link Company} and {@link com.example.dto.Company} classes.
  */
 @Mapper(config = MappingConfig.class,
         uses = EndMapper.class)
-public interface SecondListMapper extends BaseMapper<SecondListDto, SecondList> {
+public interface SecondListMapper extends BaseMapper<com.example.dto.Company, Company> {
 
 }
