@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  task:
+    image: task
+    build:
+      context: .
+    container_name: task
+    ports:
+      - 8081:8081

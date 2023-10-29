@@ -6,10 +6,11 @@ import org.springframework.data.rest.core.config.Projection;
 
 import java.util.List;
 
-@Projection(types = Root.class)
+@Projection(types = {Root.class, })
 public interface RootProjection {
 
     String getId();
     String getName();
+    String getSecondListProjectionId();
     List<SecondListProjection> getOb();
 }

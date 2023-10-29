@@ -21,20 +21,21 @@ public class SecondList {
 
     @Id
     private String id;
+    private String name;
 
-    @OneToMany(targetEntity = End.class,
+    @OneToMany(targetEntity = End2.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<End> mos;
+    private List<End2> mos;
 
 
-    @OneToMany(targetEntity = End.class,
+    @OneToMany(targetEntity = End2.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<End> moa;
+    private List<End2> moa;
 
-    @OneToMany(targetEntity = End.class,
+    @OneToMany(targetEntity = End2.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<End> mp;
+    private List<End2> mp;
 }

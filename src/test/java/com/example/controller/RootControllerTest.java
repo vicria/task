@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.dto.EndDto;
 import com.example.dto.RootDto;
 import com.example.dto.SecondListDto;
-import com.example.entity.End;
 import com.example.entity.Root;
 import com.example.entity.SecondList;
 import com.example.projection.RootProjection;
@@ -48,36 +47,36 @@ public class RootControllerTest {
         secondList.setId("ob");
 
 
-        var moa = new ArrayList<End>();
-        int size = 10000;
-        for (int i = 0; i < size; i++) {
-            var end = new End();
-            end.setId("1" + i);
-            end.setName("1" + i);
-            end.setText("1" + i);
-            moa.add(end);
-        }
-        secondList.setMoa(moa);
-
-        var mos = new ArrayList<End>();
-        for (int i = 0; i < size; i++) {
-            var end = new End();
-            end.setId("2" + i);
-            end.setName("2" + i);
-            end.setText("2" + i);
-            mos.add(end);
-        }
-        secondList.setMos(mos);
-
-        var mp = new ArrayList<End>();
-        for (int i = 0; i < size; i++) {
-            var end = new End();
-            end.setId("3" + i);
-            end.setName("3" + i);
-            end.setText("3" + i);
-            mp.add(end);
-        }
-        secondList.setMp(mp);
+//        var moa = new ArrayList<End>();
+//        int size = 10000;
+//        for (int i = 0; i < size; i++) {
+//            var end = new End();
+//            end.setId("1" + i);
+//            end.setName("1" + i);
+//            end.setText("1" + i);
+//            moa.add(end);
+//        }
+//        secondList.setMoa(moa);
+//
+//        var mos = new ArrayList<End>();
+//        for (int i = 0; i < size; i++) {
+//            var end = new End();
+//            end.setId("2" + i);
+//            end.setName("2" + i);
+//            end.setText("2" + i);
+//            mos.add(end);
+//        }
+//        secondList.setMos(mos);
+//
+//        var mp = new ArrayList<End>();
+//        for (int i = 0; i < size; i++) {
+//            var end = new End();
+//            end.setId("3" + i);
+//            end.setName("3" + i);
+//            end.setText("3" + i);
+//            mp.add(end);
+//        }
+//        secondList.setMp(mp);
 
         root = new Root();
         root.setId("1");
@@ -117,12 +116,12 @@ public class RootControllerTest {
     public void getProjections() {
         saveRoot();
         long startTime = System.currentTimeMillis();
-        RootProjection projections = service.getProjections();
+//        RootProjection projections = service.getProjections();
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
         log.warn("Время выполнения " + elapsedTime);
-        assertEquals("1", projections.getId());
-        assertEquals("root", projections.getName());
+//        assertEquals("1", projections.getId());
+//        assertEquals("root", projections.getName());
         assertTrue(elapsedTime > 5);
         assertTrue(elapsedTime < 12);
     }

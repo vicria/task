@@ -8,5 +8,6 @@ import java.util.List;
 public class RootDto {
     private String id;
     private String name;
-    private List<SecondListDto> ob;
+//    private List<SecondListDto> ob;
+//    private SecondListDto kkk;
 }
