@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
   forward-headers-strategy: framework
 
 spring:
@@ -7,18 +7,18 @@ spring:
     banner-mode: 'off'
   datasource:
     url: jdbc:postgresql://localhost:5432/task
-    username: vicria_p
-    password:
+    username: subte0us3r
+    password: passw0rdsubt3
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: task
         temp.use_jdbc_metadata_defaults: false
   application:
     name: task
+
