@@ -1,19 +1,27 @@
 package com.example.controller;
 
-import com.example.dto.RootDto;
+import com.example.entity.Root;
 import com.example.service.RootService;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller.
  */
+@Slf4j
 @RestController
-@RequiredArgsConstructor
 public class RootController {
 
     private final RootService service;
+    private final ApplicationContext context;
+
+    public RootController(RootService service, ApplicationContext context) {
+        this.service = service;
+        this.context = context;
+        log.info("Root Controller constructor");
+    }
 
     /**
      * Get All.
@@ -21,7 +29,7 @@ public class RootController {
      * @return All
      */
     @GetMapping("/all")
-    public RootDto getAll() {
+    public Root getAll() {
         return service.get();
     }
 
