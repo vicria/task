@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.entity.Root;
 import com.example.service.RootService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -29,8 +28,8 @@ public class RootController {
      * @return All
      */
     @GetMapping("/all")
-    public Root getAll() {
-        return service.get();
+    public String getAll() {
+        return "all data removed";
     }
 
 }
