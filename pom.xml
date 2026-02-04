@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service</module>
+        <module>util</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>

@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.service.RootService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RootController {
 
     private final RootService service;
-    private final ApplicationContext context;
 
-    public RootController(RootService service, ApplicationContext context) {
+    public RootController(RootService service) {
         this.service = service;
-        this.context = context;
         log.info("Root Controller constructor");
     }
 

@@ -7,3 +7,15 @@ spring:
     banner-mode: 'off'
   application:
     name: service
+  datasource:
+    url: jdbc:postgresql://db:5433/task
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    properties.hibernate:
+      default_schema: public
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      temp.use_jdbc_metadata_defaults: false
+    show-sql: true
