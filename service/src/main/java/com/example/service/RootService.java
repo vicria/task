@@ -4,35 +4,29 @@ import com.example.repository.RootRepository;
 import com.example.service.more.CustomAnnotation;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
-@Component
 @CustomAnnotation
 public class RootService {
 
-    private final NotificationService notificationService;
     private final RootRepository rootRepository;
-    private final HashMap<String, CounterService> counters;
+    private final List<CounterService> counters;
+    private final ApplicationEventPublisher publisher;
 
     public RootService(
-            NotificationService notificationService,
             RootRepository rootRepository,
-            CounterService customCounter,
-            CounterService commonCounter
+            List<CounterService> counters, ApplicationEventPublisher publisher
     ) {
-        this.notificationService = notificationService;
         this.rootRepository = rootRepository;
+        this.publisher = publisher;
         log.info("RootService конструктор");
-
-        counters = new HashMap<>();
-        counters.put("customCounterService", customCounter);
-        counters.put("counterService", commonCounter);
+        this.counters = counters;
     }
 
     @PostConstruct
@@ -42,7 +36,7 @@ public class RootService {
 
     public void generalMethod() {
         IntStream.rangeClosed(0, 30)
-                .forEach(i -> counters.values().stream()
+                .forEach(i -> counters.stream()
                         .peek(CounterService::inc)
                         .map(CounterService::result)
                         .count());
@@ -50,15 +44,11 @@ public class RootService {
         log.info("Root Service do smth");
     }
 
-    public void optionalMethod() {
-        method();
-    }
-
     @Transactional
-    private void method() {
-        notificationService.sendNotification();
+    public void optionalMethod() {
         try {
             rootRepository.deleteAll();
+            publisher.publishEvent(new Object());
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
         }

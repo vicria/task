@@ -5,6 +5,9 @@ import com.example.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -18,9 +21,14 @@ public class CustomConfig {
 
     @Bean
     public RootService factoryM() {
-        return new RootService(new NotificationService(factoryM()),
+        return new RootService(notificationService(),
                 rootRepository,
-                new CommonCounterService(),
-                new CustomCounterService());
+                List.of(new CommonCounterService(),
+                        new CustomCounterService()));
+    }
+
+    @Bean
+    public @Lazy NotificationService notificationService() {
+        return new NotificationService(factoryM());
     }
 }
