@@ -6,4 +6,4 @@ spring:
   main:
     banner-mode: 'off'
   application:
-    name: task
+    name: service
