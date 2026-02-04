@@ -13,7 +13,7 @@ public class NotificationService {
     }
 
     public void sendNotification() {
-        log.info("Notification is delivered");
+        log.info("The notification is delivered");
     }
 
 }

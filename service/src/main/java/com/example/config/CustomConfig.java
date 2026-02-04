@@ -1,8 +1,7 @@
 package com.example.config;
 
 import com.example.repository.RootRepository;
-import com.example.service.NotificationService;
-import com.example.service.RootService;
+import com.example.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,9 @@ public class CustomConfig {
 
     @Bean
     public RootService factoryM() {
-        return new RootService(new NotificationService(factoryM()), rootRepository);
+        return new RootService(new NotificationService(factoryM()),
+                rootRepository,
+                new CommonCounterService(),
+                new CustomCounterService());
     }
-
 }

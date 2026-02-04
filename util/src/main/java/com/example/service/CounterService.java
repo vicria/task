@@ -1,4 +1,6 @@
 package com.example.service;
 
-public class CounterService {
+public interface CounterService {
+    void inc();
+    int result();
 }

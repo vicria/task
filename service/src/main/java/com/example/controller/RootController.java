@@ -19,14 +19,14 @@ public class RootController {
         log.info("Root Controller constructor");
     }
 
-    /**
-     * Get All.
-     *
-     * @return All
-     */
-    @GetMapping("/all")
-    public String getAll() {
-        return "all data removed";
+    @GetMapping("/general")
+    public void general() {
+        service.generalMethod();
+    }
+
+    @GetMapping("/optional")
+    public void optional() {
+        service.optionalMethod();
     }
 
 }
