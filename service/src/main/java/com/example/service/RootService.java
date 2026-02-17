@@ -1,32 +1,36 @@
 package com.example.service;
 
+import com.example.dto.RootServiceEvent;
 import com.example.repository.RootRepository;
 import com.example.service.more.CustomAnnotation;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
+@Component
 @CustomAnnotation
 public class RootService {
 
     private final RootRepository rootRepository;
     private final List<CounterService> counters;
-    private final ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public RootService(
             RootRepository rootRepository,
-            List<CounterService> counters, ApplicationEventPublisher publisher
+            List<CounterService> counters,
+            ApplicationEventPublisher applicationEventPublisher
     ) {
         this.rootRepository = rootRepository;
-        this.publisher = publisher;
-        log.info("RootService конструктор");
+        this.applicationEventPublisher = applicationEventPublisher;
         this.counters = counters;
+
+        log.info("RootService конструктор");
     }
 
     @PostConstruct
@@ -46,12 +50,8 @@ public class RootService {
 
     @Transactional
     public void optionalMethod() {
-        try {
-            rootRepository.deleteAll();
-            publisher.publishEvent(new Object());
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-        }
+        rootRepository.deleteAll();
+        applicationEventPublisher.publishEvent(new RootServiceEvent("root event"));
         log.info("Root Service sent a notification");
     }
 

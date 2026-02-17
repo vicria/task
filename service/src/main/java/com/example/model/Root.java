@@ -7,5 +7,5 @@ import jakarta.persistence.Id;
 public class Root {
 
     @Id
-    String id;
+    private String id;
 }
