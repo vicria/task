@@ -31,6 +31,8 @@ public class RootService {
         this.counters = counters;
 
         log.info("RootService конструктор");
+        log.info("Number of CounterService: " + counters.size());
+        counters.forEach(counterService -> log.info(counterService.getClass().getName()));
     }
 
     @PostConstruct
