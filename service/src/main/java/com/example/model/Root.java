@@ -8,4 +8,6 @@ public class Root {
 
     @Id
     String id;
+
+    String name;
 }

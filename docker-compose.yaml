@@ -14,7 +14,7 @@ services:
       POSTGRES_SCHEMA: public
       STOP_ON_MIGRATION_FAILURE: "false"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql
 
 volumes:
   db-data:

@@ -10,17 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CustomConfig {
 
-    private final RootRepository rootRepository;
-
-    public CustomConfig(RootRepository rootRepository) {
-        this.rootRepository = rootRepository;
-    }
-
     @Bean
-    public RootService factoryM() {
-        return new RootService(new NotificationService(factoryM()),
-                rootRepository,
-                new CommonCounterService(),
-                new CustomCounterService());
+    public CounterService counterService() {
+        return new CommonCounterService();
     }
+
 }
