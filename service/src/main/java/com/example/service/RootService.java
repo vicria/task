@@ -1,14 +1,18 @@
 package com.example.service;
 
+import com.example.event.CustomEventPublisher;
 import com.example.repository.RootRepository;
 import com.example.service.more.CustomAnnotation;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -16,23 +20,20 @@ import java.util.stream.IntStream;
 @CustomAnnotation
 public class RootService {
 
-    private final NotificationService notificationService;
+    private final CustomEventPublisher customEventPublisher;
     private final RootRepository rootRepository;
-    private final HashMap<String, CounterService> counters;
+    private final List<CounterService> counters;
 
     public RootService(
-            NotificationService notificationService,
+            CustomEventPublisher customEventPublisher,
             RootRepository rootRepository,
-            CounterService customCounter,
-            CounterService commonCounter
+            List<CounterService> counters
     ) {
-        this.notificationService = notificationService;
+        this.customEventPublisher = customEventPublisher;
         this.rootRepository = rootRepository;
         log.info("RootService конструктор");
 
-        counters = new HashMap<>();
-        counters.put("customCounterService", customCounter);
-        counters.put("counterService", commonCounter);
+        this.counters = counters;
     }
 
     @PostConstruct
@@ -42,7 +43,7 @@ public class RootService {
 
     public void generalMethod() {
         IntStream.rangeClosed(0, 30)
-                .forEach(i -> counters.values().stream()
+                .forEach(i -> counters.stream()
                         .peek(CounterService::inc)
                         .map(CounterService::result)
                         .count());
@@ -50,19 +51,10 @@ public class RootService {
         log.info("Root Service do smth");
     }
 
-    public void optionalMethod() {
-        method();
-    }
-
     @Transactional
-    private void method() {
-        notificationService.sendNotification();
-        try {
-            rootRepository.deleteAll();
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-        }
+    public void optionalMethod() {
+        customEventPublisher.publishCustomEvent("Transaction");
+        rootRepository.deleteAll();
         log.info("Root Service sent a notification");
     }
-
 }

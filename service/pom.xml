@@ -26,8 +26,8 @@
 
         <java.version>17</java.version>
         <!-- Дублирование версий из spring boot, надо их проверять при поднятии версии -->
-        <lombok.version>1.18.20</lombok.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <lombok.version>1.18.42</lombok.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
 
     <dependencies>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>1.18.42</version>
             <scope>provided</scope>
         </dependency>
 
@@ -94,7 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.15.0</version>
                 <configuration>
                     <source>17</source> <!-- depending on your project -->
                     <target>17</target> <!-- depending on your project -->
